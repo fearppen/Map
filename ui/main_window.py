@@ -12,7 +12,7 @@ class Window(QMainWindow):
 
         super(QMainWindow, self).__init__(parent)
 
-        uic.loadUi(r"D:\Map\ui\main_window.ui", self)
+        uic.loadUi(r"ui\main_window.ui", self)
 
         self.show_map()
 
