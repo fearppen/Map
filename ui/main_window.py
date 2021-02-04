@@ -1,4 +1,5 @@
-from PyQt5 import uic
+from PyQt5 import uic, QtGui
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow
 
@@ -9,6 +10,7 @@ from domain.map_params import MapParams
 class Window(QMainWindow):
     def __init__(self, use_case: GetMapUseCase, parent=None):
         self.use_case = use_case
+        self.map_params = MapParams()
 
         super(QMainWindow, self).__init__(parent)
 
@@ -16,9 +18,16 @@ class Window(QMainWindow):
 
         self.show_map()
 
+    def keyPressEvent(self, key_event: QtGui.QKeyEvent) -> None:
+        key = key_event.key()
+        if key == Qt.Key_PageUp:
+            self.map_params.zoom_up()
+        elif key == Qt.Key_PageDown:
+            self.map_params.zoom_down()
+        self.show_map()
+
     def show_map(self):
-        map_params = MapParams()
-        map = self.use_case.execute(map_params)
+        map = self.use_case.execute(self.map_params)
 
         pixmap = QPixmap()
         pixmap.loadFromData(map, "PNG")
