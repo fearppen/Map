@@ -24,6 +24,15 @@ class Window(QMainWindow):
             self.map_params.zoom_up()
         elif key == Qt.Key_PageDown:
             self.map_params.zoom_down()
+        if key == Qt.Key_Left:
+            self.map_params.left()
+        elif key == Qt.Key_Right:
+            self.map_params.right()
+        if key == Qt.Key_Up:
+            self.map_params.up()
+        elif key == Qt.Key_Down:
+            self.map_params.down()
+
         self.show_map()
 
     def show_map(self):
