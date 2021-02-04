@@ -1,18 +1,25 @@
-import sys
-
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QMainWindow
+
+from app_service.get_map_uc import GetMapUseCase
+from domain.map_params import MapParams
 
 
 class Window(QMainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, use_case: GetMapUseCase, parent=None):
+        self.use_case = use_case
+
         super(QMainWindow, self).__init__(parent)
 
-        uic.loadUi("main_window.ui", self)
+        uic.loadUi(r"D:\Map\ui\main_window.ui", self)
 
+        self.show_map()
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    main = Window()
-    main.show()
-    sys.exit(app.exec_())
+    def show_map(self):
+        map_params = MapParams()
+        map = self.use_case.execute(map_params)
+
+        pixmap = QPixmap()
+        pixmap.loadFromData(map, "PNG")
+        self.map_label.setPixmap(pixmap)
