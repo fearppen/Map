@@ -10,15 +10,10 @@ class MapParams:
     SOURCE_LATITUDE = 55.703118
 
     def __init__(self):
-<<<<<<< HEAD
-        self.start_longitude = 37.530887
-        self.longitude = 37.530887
-        self.start_latitude = 55.703118
-        self.latitude = 55.703118
-=======
         self.longitude = self.SOURCE_LONGITUDE
         self.latitude = self.SOURCE_LATITUDE
->>>>>>> c2cd47234b47bbd380e09042246c0bd0b2b92eeb
+        self.start_longitude = self.SOURCE_LONGITUDE
+        self.start_latitude = self.SOURCE_LATITUDE
         self.zoom = 15
         self.type_map = 'map'
 
