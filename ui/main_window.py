@@ -5,12 +5,15 @@ from PyQt5.QtWidgets import QMainWindow
 
 from app_service.get_map_uc import GetMapUseCase
 from domain.map_params import MapParams
-
+from app_service.get_coords import GetCoords
+from services.geocoder_adapter import GeocoderAdapter
 
 class Window(QMainWindow):
-    def __init__(self, use_case: GetMapUseCase, parent=None):
+    def __init__(self, use_case: GetMapUseCase, get_coords: GetCoords, parent=None):
         self.use_case = use_case
         self.map_params = MapParams()
+        self.get_coords = get_coords
+        self.geocoder_adapter = GeocoderAdapter()
 
         super(QMainWindow, self).__init__(parent)
 
@@ -37,6 +40,10 @@ class Window(QMainWindow):
         self.show_map()
 
     def press_key_button(self):
+        if self.lineEdit.text():
+            coords = self.get_coords.execute(self.geocoder_adapter.get_coords(self.lineEdit.text()))
+            self.map_params.set_latitude(coords[1])
+            self.map_params.set_longitude(coords[0])
         self.show_map()
 
     def changed_combo_box(self, text):
