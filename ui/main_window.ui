@@ -23,6 +23,9 @@
         <height>450</height>
        </size>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::StrongFocus</enum>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -84,6 +87,9 @@
              <font>
               <family>Palatino Linotype</family>
              </font>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Почтовый индекс</string>
