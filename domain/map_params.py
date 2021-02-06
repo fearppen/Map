@@ -6,7 +6,9 @@ class MapParams:
     LON_STEP = 0.02
 
     def __init__(self):
+        self.start_longitude = 37.530887
         self.longitude = 37.530887
+        self.start_latitude = 55.703118
         self.latitude = 55.703118
         self.zoom = 15
         self.type_map = 'map'
@@ -31,9 +33,11 @@ class MapParams:
 
     def set_longitude(self, longitude):
         self.longitude = longitude
+        self.start_longitude = longitude
 
     def set_latitude(self, latitude):
         self.latitude = latitude
+        self.start_latitude = latitude
 
     def change_type_map(self):
         self.type_map = 'map'
@@ -55,3 +59,9 @@ class MapParams:
 
     def get_type_map(self):
         return self.type_map
+
+    def get_start_longitude(self):
+        return self.start_longitude
+
+    def get_start_latitude(self):
+        return self.start_latitude
