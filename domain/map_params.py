@@ -29,6 +29,12 @@ class MapParams:
     def down(self):
         self.latitude -= self.LAT_STEP * math.pow(2, 15 - self.zoom)
 
+    def set_longitude(self, longitude):
+        self.longitude = longitude
+
+    def set_latitude(self, latitude):
+        self.latitude = latitude
+
     def change_type_map(self):
         self.type_map = 'map'
 
