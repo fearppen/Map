@@ -61,6 +61,7 @@ class Window(QMainWindow):
     def clear(self):
         self.map_params.into_source_coords()
         self.input_object.clear()
+        self.output_address.clear()
         self.search()
         self.show_map()
 
