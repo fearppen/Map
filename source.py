@@ -2,7 +2,9 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 
+from app_service.get_address import GetAddress
 from app_service.get_map_uc import GetMapUseCase
+from app_service.get_postal_code import GetPostalCode
 from services.yandex_map_adapter import YandexMapAdapter
 from ui.main_window import Window
 from services.geocoder_adapter import GeocoderAdapter
@@ -14,12 +16,14 @@ def except_hook(cls, exception, traceback):
 
 
 if __name__ == '__main__':
-    adapter = YandexMapAdapter()
-    use_case = GetMapUseCase(adapter)
-    adapter2 = GeocoderAdapter()
-    get_coords = GetCoords(adapter2)
+    yandex_adapter = YandexMapAdapter()
+    use_case = GetMapUseCase(yandex_adapter)
+    geocoder_adapter = GeocoderAdapter()
+    get_coords = GetCoords(geocoder_adapter)
+    get_address = GetAddress(geocoder_adapter)
+    get_postal_code = GetPostalCode(geocoder_adapter)
     app = QApplication(sys.argv)
-    main = Window(use_case, get_coords)
+    main = Window(use_case, get_coords, get_address, get_postal_code)
     main.show()
     sys.excepthook = except_hook
     sys.exit(app.exec_())

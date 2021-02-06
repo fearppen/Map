@@ -1,9 +1,9 @@
 import requests
 
-from services.i_find_coords_service import IFindCoordsService
+from services.i_obj_service import IObjService
 
 
-class GeocoderAdapter(IFindCoordsService):
+class GeocoderAdapter(IObjService):
     map_request = "http://geocode-maps.yandex.ru/1.x/"
 
     def get_coords(self, name):

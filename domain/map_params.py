@@ -4,20 +4,29 @@ import math
 class MapParams:
     LAT_STEP = 0.008
     LON_STEP = 0.02
+    MAX_ZOOM = 24
+    MIN_ZOOM = 1
+    SOURCE_LONGITUDE = 37.530887
+    SOURCE_LATITUDE = 55.703118
 
     def __init__(self):
+<<<<<<< HEAD
         self.start_longitude = 37.530887
         self.longitude = 37.530887
         self.start_latitude = 55.703118
         self.latitude = 55.703118
+=======
+        self.longitude = self.SOURCE_LONGITUDE
+        self.latitude = self.SOURCE_LATITUDE
+>>>>>>> c2cd47234b47bbd380e09042246c0bd0b2b92eeb
         self.zoom = 15
         self.type_map = 'map'
 
     def zoom_up(self):
-        self.zoom += 1
+        self.zoom += 1 if self.zoom < self.MAX_ZOOM else 0
 
     def zoom_down(self):
-        self.zoom -= 1
+        self.zoom -= 1if self.zoom > self.MIN_ZOOM else 0
 
     def left(self):
         self.longitude -= self.LON_STEP * math.pow(2, 15 - self.zoom)
@@ -38,6 +47,10 @@ class MapParams:
     def set_latitude(self, latitude):
         self.latitude = latitude
         self.start_latitude = latitude
+
+    def into_source_coords(self):
+        self.longitude = self.SOURCE_LONGITUDE
+        self.latitude = self.SOURCE_LATITUDE
 
     def change_type_map(self):
         self.type_map = 'map'
