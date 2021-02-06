@@ -9,4 +9,5 @@ class YandexMapAdapter(IMapService):
     def get_map(self, longitude, latitude, zoom, type_map):
         return requests.get(self.map_request, params={"pt": f"{longitude},{latitude}",
                                                       "z": zoom,
-                                                      "l": type_map}).content
+                                                      "l": type_map,
+                                                      "size": "650,450"}).content

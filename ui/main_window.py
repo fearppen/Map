@@ -19,8 +19,8 @@ class Window(QMainWindow):
         super(QMainWindow, self).__init__(parent)
 
         uic.loadUi(r"ui\main_window.ui", self)
-        self.pushButton.clicked.connect(self.press_key_button)
-        self.comboBox.activated[str].connect(self.changed_combo_box)
+        self.button_search.clicked.connect(self.search)
+        self.choise_type.activated[str].connect(self.changed_type)
         self.show_map()
 
     def keyPressEvent(self, key_event: QtGui.QKeyEvent) -> None:
@@ -40,14 +40,15 @@ class Window(QMainWindow):
 
         self.show_map()
 
-    def press_key_button(self):
-        if self.lineEdit.text():
-            coords = self.get_coords.execute(self.geocoder_adapter.get_coords(self.lineEdit.text()))
+    def search(self):
+        type = self.input_object.text()
+        if type:
+            coords = self.get_coords.execute(self.geocoder_adapter.get_coords(type))
             self.map_params.set_latitude(coords[1])
             self.map_params.set_longitude(coords[0])
         self.show_map()
 
-    def changed_combo_box(self, text):
+    def changed_type(self, text):
         if text == 'Схема':
             self.map_params.change_type_map()
         elif text == 'Спутник':
