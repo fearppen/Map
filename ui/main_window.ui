@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>576</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,39 @@
      <widget class="QLabel" name="map_label">
       <property name="text">
        <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="comboBox">
+      <item>
+       <property name="text">
+        <string>Схема</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Спутник</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Гибрид</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Поиск</string>
       </property>
      </widget>
     </item>
