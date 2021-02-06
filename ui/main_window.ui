@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>945</width>
-    <height>497</height>
+    <height>513</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
        <enum>QLayout::SetNoConstraint</enum>
       </property>
       <item>
-       <widget class="QLineEdit" name="output_adress">
+       <widget class="QLineEdit" name="output_address">
         <property name="font">
          <font>
           <family>Palatino Linotype</family>
@@ -71,9 +71,6 @@
           <property name="focusPolicy">
            <enum>Qt::ClickFocus</enum>
           </property>
-          <property name="text">
-           <string/>
-          </property>
           <property name="placeholderText">
            <string>Введите объект..</string>
           </property>
@@ -86,6 +83,9 @@
             <family>Palatino Linotype</family>
             <pointsize>16</pointsize>
            </font>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="text">
            <string>Сброс</string>
@@ -109,7 +109,7 @@
          <bool>false</bool>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <item>
          <property name="text">
@@ -137,7 +137,7 @@
          </font>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string>Поиск</string>

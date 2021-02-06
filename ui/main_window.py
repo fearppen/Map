@@ -3,6 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow
 
+from app_service.get_address import GetAddress
 from app_service.get_coords import GetCoords
 from app_service.get_map_uc import GetMapUseCase
 from domain.map_params import MapParams
@@ -10,9 +11,12 @@ from services.geocoder_adapter import GeocoderAdapter
 
 
 class Window(QMainWindow):
-    def __init__(self, use_case: GetMapUseCase, get_coords: GetCoords, parent=None):
+    def __init__(self, use_case: GetMapUseCase,
+                 get_coords: GetCoords, get_address: GetAddress,
+                 parent=None):
         self.use_case = use_case
         self.get_coords = get_coords
+        self.get_address = get_address
         self.map_params = MapParams()
         self.geocoder_adapter = GeocoderAdapter()
 
@@ -49,6 +53,9 @@ class Window(QMainWindow):
             coords = self.get_coords.execute(self.geocoder_adapter.get_coords(obj))
             self.map_params.set_latitude(coords[1])
             self.map_params.set_longitude(coords[0])
+
+            address = self.get_address.execute(self.geocoder_adapter.get_coords(obj))
+            self.output_address.setText(address)
         self.show_map()
 
     def clear(self):
