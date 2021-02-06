@@ -3,10 +3,11 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow
 
+from app_service.get_coords import GetCoords
 from app_service.get_map_uc import GetMapUseCase
 from domain.map_params import MapParams
-from app_service.get_coords import GetCoords
 from services.geocoder_adapter import GeocoderAdapter
+
 
 class Window(QMainWindow):
     def __init__(self, use_case: GetMapUseCase, get_coords: GetCoords, parent=None):
