@@ -12,6 +12,8 @@ class MapParams:
     def __init__(self):
         self.longitude = self.SOURCE_LONGITUDE
         self.latitude = self.SOURCE_LATITUDE
+        self.start_longitude = self.SOURCE_LONGITUDE
+        self.start_latitude = self.SOURCE_LATITUDE
         self.zoom = 15
         self.type_map = 'map'
 
@@ -35,9 +37,11 @@ class MapParams:
 
     def set_longitude(self, longitude):
         self.longitude = longitude
+        self.start_longitude = longitude
 
     def set_latitude(self, latitude):
         self.latitude = latitude
+        self.start_latitude = latitude
 
     def into_source_coords(self):
         self.longitude = self.SOURCE_LONGITUDE
@@ -63,3 +67,9 @@ class MapParams:
 
     def get_type_map(self):
         return self.type_map
+
+    def get_start_longitude(self):
+        return self.start_longitude
+
+    def get_start_latitude(self):
+        return self.start_latitude
