@@ -15,7 +15,8 @@ class Window(QMainWindow):
         super(QMainWindow, self).__init__(parent)
 
         uic.loadUi(r"ui\main_window.ui", self)
-
+        self.pushButton.clicked.connect(self.press_key_button)
+        self.comboBox.activated[str].connect(self.changed_combo_box)
         self.show_map()
 
     def keyPressEvent(self, key_event: QtGui.QKeyEvent) -> None:
@@ -35,9 +36,27 @@ class Window(QMainWindow):
 
         self.show_map()
 
+    def press_key_button(self):
+        self.show_map()
+
+    def changed_combo_box(self, text):
+        if text == 'Схема':
+            self.map_params.change_type_map()
+        elif text == 'Спутник':
+            self.map_params.change_type_sat()
+        elif text == 'Гибрид':
+            self.map_params.change_type_sat_skl()
+
     def show_map(self):
         map = self.use_case.execute(self.map_params)
 
         pixmap = QPixmap()
-        pixmap.loadFromData(map, "PNG")
+        type_map = str()
+
+        if self.map_params.get_type_map() == 'sat' or self.map_params.get_type_map() == 'sat,skl':
+            type_map = 'JPG'
+        elif self.map_params.get_type_map() == 'map':
+            type_map = 'PNG'
+
+        pixmap.loadFromData(map, type_map)
         self.map_label.setPixmap(pixmap)
