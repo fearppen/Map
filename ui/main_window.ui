@@ -41,7 +41,7 @@
         <property name="font">
          <font>
           <family>Palatino Linotype</family>
-          <pointsize>16</pointsize>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <property name="focusPolicy">
@@ -61,27 +61,43 @@
          <enum>QLayout::SetNoConstraint</enum>
         </property>
         <item>
-         <widget class="QLineEdit" name="input_object">
-          <property name="font">
-           <font>
-            <family>Palatino Linotype</family>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::ClickFocus</enum>
-          </property>
-          <property name="placeholderText">
-           <string>Введите объект..</string>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLineEdit" name="input_object">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::ClickFocus</enum>
+            </property>
+            <property name="placeholderText">
+             <string>Введите объект..</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="check_postal_code">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+             </font>
+            </property>
+            <property name="text">
+             <string>Почтовый индекс</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QPushButton" name="button_clear">
           <property name="font">
            <font>
             <family>Palatino Linotype</family>
-            <pointsize>16</pointsize>
+            <pointsize>12</pointsize>
            </font>
           </property>
           <property name="focusPolicy">
@@ -99,7 +115,7 @@
         <property name="font">
          <font>
           <family>Palatino Linotype</family>
-          <pointsize>16</pointsize>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <property name="cursor">
@@ -133,7 +149,7 @@
         <property name="font">
          <font>
           <family>Palatino Linotype</family>
-          <pointsize>16</pointsize>
+          <pointsize>12</pointsize>
          </font>
         </property>
         <property name="focusPolicy">

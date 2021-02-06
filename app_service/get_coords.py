@@ -1,8 +1,8 @@
-from services.i_find_coords_service import IFindCoordsService
+from services.i_obj_service import IObjService
 
 
 class GetCoords:
-    def __init__(self, service: IFindCoordsService):
+    def __init__(self, service: IObjService):
         self.service = service
 
     def execute(self, param):

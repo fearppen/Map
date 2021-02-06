@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication
 
 from app_service.get_address import GetAddress
 from app_service.get_map_uc import GetMapUseCase
+from app_service.get_postal_code import GetPostalCode
 from services.yandex_map_adapter import YandexMapAdapter
 from ui.main_window import Window
 from services.geocoder_adapter import GeocoderAdapter
@@ -20,8 +21,9 @@ if __name__ == '__main__':
     geocoder_adapter = GeocoderAdapter()
     get_coords = GetCoords(geocoder_adapter)
     get_address = GetAddress(geocoder_adapter)
+    get_postal_code = GetPostalCode(geocoder_adapter)
     app = QApplication(sys.argv)
-    main = Window(use_case, get_coords, get_address)
+    main = Window(use_case, get_coords, get_address, get_postal_code)
     main.show()
     sys.excepthook = except_hook
     sys.exit(app.exec_())
