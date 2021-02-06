@@ -7,7 +7,7 @@ class YandexMapAdapter(IMapService):
     map_request = "http://static-maps.yandex.ru/1.x/"
 
     def get_map(self, longitude, latitude, zoom, type_map):
-        return requests.get(self.map_request, params={"pt": f"{longitude},{latitude}",
+        return requests.get(self.map_request, params={"pt": f"{longitude},{latitude},vkbkm",
                                                       "z": zoom,
                                                       "l": type_map,
                                                       "size": "650,450"}).content
