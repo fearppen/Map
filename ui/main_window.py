@@ -90,7 +90,7 @@ class Window(QMainWindow):
                                 self.map_params.start_longitude,
                                 self.map_params.start_latitude))
                 if name_object:
-                    self.output_address.setText(name_object)
+                    self.output_address.setText(str(name_object))
                 self.add_postal_code(flag_find_by_coords=True)
                 self.show_map()
 
