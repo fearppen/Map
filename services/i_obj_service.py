@@ -8,3 +8,6 @@ class IObjService(ABC):
 
     def get_object(self, longitude: float, latitude: float):
         pass
+
+    def get_organization(self, longitude: float, latitude: float):
+        pass

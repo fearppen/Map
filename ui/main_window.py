@@ -57,17 +57,20 @@ class Window(QMainWindow):
 
         self.show_map()
 
+    def find_coords_where_click(self, event: QMouseEvent):
+        self.map_params.find_scale(self.map_params.latitude)
+        x, y = event.x() - self.middle_coords_x, event.y() - self.middle_coords_y
+        self.map_params.start_longitude = self.map_params.longitude + \
+                                          x * self.map_params.scale_x
+        self.map_params.start_latitude = self.map_params.latitude - \
+                                         y * self.map_params.scale_y
+
     def mousePressEvent(self, event: QMouseEvent):
         key = event.button()
         if key == 1:
-            self.clear()
             if (event.x() <= 600 and event.y() <= 470) and event.y() >= 20:
-                self.map_params.find_scale(self.map_params.latitude)
-                x, y = event.x() - self.middle_coords_x, event.y() - self.middle_coords_y
-                self.map_params.start_longitude = self.map_params.longitude +\
-                                                  x * self.map_params.scale_x
-                self.map_params.start_latitude = self.map_params.latitude -\
-                                                 y * self.map_params.scale_y
+                self.output_address.setText('')
+                self.find_coords_where_click(event)
 
                 name_object = self.get_coords.execute_object(
                                                (self.geocoder_adapter.get_object
@@ -76,6 +79,17 @@ class Window(QMainWindow):
                 self.output_address.setText(name_object)
                 self.add_postal_code(flag_find_by_coords=True)
 
+                self.show_map()
+        elif key == 2:
+            if (event.x() <= 600 and event.y() <= 470) and event.y() >= 20:
+                self.output_address.setText('')
+                self.find_coords_where_click(event)
+                name_object = self.get_address.execute_organization(self.geocoder_adapter.get_organization(
+                              self.map_params.start_longitude,
+                              self.map_params.start_latitude))
+                if name_object:
+                    self.output_address.setText(name_object)
+                self.add_postal_code(flag_find_by_coords=True)
                 self.show_map()
 
     def search(self):
