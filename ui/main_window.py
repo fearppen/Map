@@ -62,17 +62,15 @@ class Window(QMainWindow):
         if key == 1:
             self.clear()
             if (event.x() <= 600 and event.y() <= 470) and event.y() >= 20:
-                self.map_params.find_scale(self.map_params.latitude)
+                self.map_params.find_scale(self.map_params.get_latitude())
                 x, y = event.x() - self.middle_coords_x, event.y() - self.middle_coords_y
-                self.map_params.start_longitude = self.map_params.longitude +\
-                                                  x * self.map_params.scale_x
-                self.map_params.start_latitude = self.map_params.latitude -\
-                                                 y * self.map_params.scale_y
+                self.map_params.set_start_longitude(self.map_params.get_longitude() +
+                                                    x * self.map_params.get_scale_x())
+                self.map_params.set_start_latitude(self.map_params.get_latitude() -
+                                                   y * self.map_params.get_scale_y())
 
-                name_object = self.get_coords.execute_object(
-                                               (self.geocoder_adapter.get_object
-                                                (self.map_params.start_longitude,
-                                                 self.map_params.start_latitude)))
+                name_object = self.get_coords.execute_object((self.geocoder_adapter.get_object(
+                    self.map_params.get_start_longitude(), self.map_params.get_start_latitude())))
                 self.output_address.setText(name_object)
                 self.add_postal_code(flag_find_by_coords=True)
 
@@ -113,9 +111,9 @@ class Window(QMainWindow):
                 postal_code = self.get_postal_code.execute(
                     self.geocoder_adapter.get_coords(self.search_obj))
             else:
-                postal_code = self.get_postal_code.execute_by_coords \
-                    (self.geocoder_adapter.get_object
-                     (self.map_params.start_longitude, self.map_params.start_latitude))
+                postal_code = self.get_postal_code.execute_by_coords(
+                    self.geocoder_adapter.get_object(self.map_params.get_start_longitude(),
+                                                     self.map_params.get_start_latitude()))
 
             if self.check_postal_code.isChecked():
                 self.output_address.setText(self.output_address.text() + ", " + postal_code)
