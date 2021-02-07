@@ -16,6 +16,9 @@ class MapParams:
         self.start_latitude = self.SOURCE_LATITUDE
         self.zoom = 15
         self.type_map = 'map'
+        self.scale_x = float
+        self.scale_y = float
+        self.find_scale(self.latitude)
 
     def zoom_up(self):
         self.zoom += 1 if self.zoom < self.MAX_ZOOM else 0
@@ -37,10 +40,14 @@ class MapParams:
 
     def set_longitude(self, longitude):
         self.longitude = longitude
-        self.start_longitude = longitude
 
     def set_latitude(self, latitude):
         self.latitude = latitude
+
+    def set_start_longitude(self, longitude):
+        self.start_longitude = longitude
+
+    def set_start_latitude(self, latitude):
         self.start_latitude = latitude
 
     def into_source_coords(self):
@@ -73,3 +80,7 @@ class MapParams:
 
     def get_start_latitude(self):
         return self.start_latitude
+
+    def find_scale(self, latitude):
+        self.scale_x = 360 / math.pow(2, self.zoom + 8)
+        self.scale_y = math.cos(latitude * math.pi / 180) * 360 / math.pow(2, self.zoom + 8)

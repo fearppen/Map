@@ -11,3 +11,9 @@ class GeocoderAdapter(IObjService):
                             params={"apikey": "40d1649f-0493-4b70-98ba-98533de7710b",
                                     "geocode": name,
                                     "format": "json"}).json()
+
+    def get_object(self, longitude, latitude):
+        return requests.get(self.map_request,
+                            params={"apikey": "40d1649f-0493-4b70-98ba-98533de7710b",
+                                    "geocode": f"{longitude},{latitude}",
+                                    "format": "json"}).json()
