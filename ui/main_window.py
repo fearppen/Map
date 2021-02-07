@@ -76,6 +76,7 @@ class Window(QMainWindow):
                                                (self.geocoder_adapter.get_object
                                                 (self.map_params.start_longitude,
                                                  self.map_params.start_latitude)))
+
                 self.output_address.setText(name_object)
                 self.add_postal_code(flag_find_by_coords=True)
 
@@ -84,9 +85,10 @@ class Window(QMainWindow):
             if (event.x() <= 600 and event.y() <= 470) and event.y() >= 20:
                 self.output_address.setText('')
                 self.find_coords_where_click(event)
-                name_object = self.get_address.execute_organization(self.geocoder_adapter.get_organization(
-                              self.map_params.start_longitude,
-                              self.map_params.start_latitude))
+                name_object = self.get_address.execute_organization(
+                              self.geocoder_adapter.get_organization(
+                                self.map_params.start_longitude,
+                                self.map_params.start_latitude))
                 if name_object:
                     self.output_address.setText(name_object)
                 self.add_postal_code(flag_find_by_coords=True)
@@ -127,9 +129,9 @@ class Window(QMainWindow):
                 postal_code = self.get_postal_code.execute(
                     self.geocoder_adapter.get_coords(self.search_obj))
             else:
-                postal_code = self.get_postal_code.execute_by_coords \
-                    (self.geocoder_adapter.get_object
-                     (self.map_params.start_longitude, self.map_params.start_latitude))
+                postal_code = self.get_postal_code.execute_by_coords(
+                    self.geocoder_adapter.get_object(self.map_params.get_start_longitude(),
+                                                     self.map_params.get_start_latitude()))
 
             if self.check_postal_code.isChecked():
                 self.output_address.setText(self.output_address.text() + ", " + postal_code)

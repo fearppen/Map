@@ -63,6 +63,12 @@ class MapParams:
     def change_type_sat_skl(self):
         self.type_map = 'sat,skl'
 
+    def get_scale_x(self):
+        return self.scale_x
+
+    def get_scale_y(self):
+        return self.scale_y
+
     def get_longitude(self):
         return self.longitude
 
