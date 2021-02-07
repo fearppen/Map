@@ -8,3 +8,7 @@ class GetPostalCode:
     def execute(self, param):
         return param["response"]["GeoObjectCollection"]["featureMember"][
             0]["GeoObject"]["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]
+
+    def execute_by_coords(self, param):
+        return param["response"]["GeoObjectCollection"]["featureMember"] \
+            [0]["GeoObject"]["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]

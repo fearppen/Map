@@ -1,6 +1,6 @@
 from PyQt5 import uic, QtGui
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QMouseEvent
 from PyQt5.QtWidgets import QMainWindow
 
 from app_service.get_address import GetAddress
@@ -21,6 +21,8 @@ class Window(QMainWindow):
         self.get_postal_code = get_postal_code
         self.map_params = MapParams()
         self.geocoder_adapter = GeocoderAdapter()
+        self.middle_coords_x = 300
+        self.middle_coords_y = 245
 
         self.search_obj = ""
 
@@ -50,17 +52,44 @@ class Window(QMainWindow):
         elif key == Qt.Key_Down:
             self.map_params.down()
 
+        if key == Qt.LeftButton:
+            print(1)
+
         self.show_map()
+
+    def mousePressEvent(self, event: QMouseEvent):
+        key = event.button()
+        if key == 1:
+            self.clear()
+            if (event.x() <= 600 and event.y() <= 470) and event.y() >= 20:
+                self.map_params.find_scale(self.map_params.latitude)
+                x, y = event.x() - self.middle_coords_x, event.y() - self.middle_coords_y
+                self.map_params.start_longitude = self.map_params.longitude +\
+                                                  x * self.map_params.scale_x
+                self.map_params.start_latitude = self.map_params.latitude -\
+                                                 y * self.map_params.scale_y
+
+                name_object = self.get_coords.execute_object(
+                                               (self.geocoder_adapter.get_object
+                                                (self.map_params.start_longitude,
+                                                 self.map_params.start_latitude)))
+                self.output_address.setText(name_object)
+                self.add_postal_code(flag_find_by_coords=True)
+
+                self.show_map()
 
     def search(self):
         self.search_obj = self.input_object.text()
         if self.search_obj:
             coords = self.get_coords.execute(self.geocoder_adapter.get_coords(self.search_obj))
             self.map_params.set_latitude(coords[1])
+            self.map_params.set_start_latitude(coords[1])
+            self.map_params.set_start_longitude(coords[0])
             self.map_params.set_longitude(coords[0])
 
             address = self.get_address.execute(self.geocoder_adapter.get_coords(self.search_obj))
             self.output_address.setText(address)
+
         self.show_map()
 
     def clear(self):
@@ -78,10 +107,16 @@ class Window(QMainWindow):
         elif text == 'Гибрид':
             self.map_params.change_type_sat_skl()
 
-    def add_postal_code(self):
+    def add_postal_code(self, flag_find_by_coords=False):
         try:
-            postal_code = self.get_postal_code.execute(
-                self.geocoder_adapter.get_coords(self.search_obj))
+            if not flag_find_by_coords:
+                postal_code = self.get_postal_code.execute(
+                    self.geocoder_adapter.get_coords(self.search_obj))
+            else:
+                postal_code = self.get_postal_code.execute_by_coords \
+                    (self.geocoder_adapter.get_object
+                     (self.map_params.start_longitude, self.map_params.start_latitude))
+
             if self.check_postal_code.isChecked():
                 self.output_address.setText(self.output_address.text() + ", " + postal_code)
             else:
