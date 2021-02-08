@@ -9,12 +9,14 @@ from app_service.get_map_uc import GetMapUseCase
 from app_service.get_postal_code import GetPostalCode
 from domain.map_params import MapParams
 from services.geocoder_adapter import GeocoderAdapter
+from services.object_service_adapter import ObjectServiceAdapter
+from app_service.get_address_organization import GetAddressOrganization
 
 
 class Window(QMainWindow):
     def __init__(self, use_case: GetMapUseCase,
                  get_coords: GetCoords, get_address: GetAddress, get_postal_code: GetPostalCode,
-                 parent=None):
+                 get_address_organization: GetAddressOrganization, parent=None):
         self.use_case = use_case
         self.get_coords = get_coords
         self.get_address = get_address
@@ -23,6 +25,8 @@ class Window(QMainWindow):
         self.geocoder_adapter = GeocoderAdapter()
         self.middle_coords_x = 300
         self.middle_coords_y = 245
+        self.get_address_organization = get_address_organization
+        self.object_service_adapter = ObjectServiceAdapter()
 
         self.search_obj = ""
 
@@ -85,10 +89,15 @@ class Window(QMainWindow):
             if (event.x() <= 600 and event.y() <= 470) and event.y() >= 20:
                 self.output_address.setText('')
                 self.find_coords_where_click(event)
-                name_object = self.get_address.execute_organization(
-                              self.geocoder_adapter.get_organization(
-                                self.map_params.start_longitude,
-                                self.map_params.start_latitude))
+                name_place = self.get_address.execute(self.geocoder_adapter.get_object(
+                    self.map_params.get_start_longitude(), self.map_params.get_start_latitude()
+                ))
+                name_object = self.get_address_organization.execute_organization(
+                    self.object_service_adapter.get_organization(
+                        self.map_params.get_start_longitude(),
+                        self.map_params.get_start_latitude(), name_place),
+                    self.map_params.get_start_longitude(),
+                    self.map_params.get_start_latitude())
                 if name_object:
                     self.output_address.setText(str(name_object))
                 self.add_postal_code(flag_find_by_coords=True)
