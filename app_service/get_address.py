@@ -8,9 +8,3 @@ class GetAddress:
     def execute(self, param):
         return param["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"] \
                ["metaDataProperty"]["GeocoderMetaData"]["text"]
-
-    def execute_organization(self, param):
-        all_names = param["response"]["GeoObjectCollection"]["featureMember"]
-        for i in all_names:
-            if i['GeoObject']['metaDataProperty']['GeocoderMetaData']['kind'] == 'house':
-                return i['GeoObject']['metaDataProperty']['GeocoderMetaData']['text']
