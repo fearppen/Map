@@ -4,13 +4,13 @@ from PyQt5.QtGui import QPixmap, QMouseEvent
 from PyQt5.QtWidgets import QMainWindow
 
 from app_service.get_address import GetAddress
+from app_service.get_address_organization import GetAddressOrganization
 from app_service.get_coords import GetCoords
 from app_service.get_map_uc import GetMapUseCase
 from app_service.get_postal_code import GetPostalCode
 from domain.map_params import MapParams
 from services.geocoder_adapter import GeocoderAdapter
 from services.object_service_adapter import ObjectServiceAdapter
-from app_service.get_address_organization import GetAddressOrganization
 
 
 class Window(QMainWindow):
@@ -29,6 +29,7 @@ class Window(QMainWindow):
         self.object_service_adapter = ObjectServiceAdapter()
 
         self.search_obj = ""
+        self.postal_code = ""
 
         super(QMainWindow, self).__init__(parent)
 
@@ -77,9 +78,9 @@ class Window(QMainWindow):
                 self.find_coords_where_click(event)
 
                 name_object = self.get_coords.execute_object(
-                                               (self.geocoder_adapter.get_object
-                                                (self.map_params.start_longitude,
-                                                 self.map_params.start_latitude)))
+                    (self.geocoder_adapter.get_object
+                     (self.map_params.start_longitude,
+                      self.map_params.start_latitude)))
 
                 self.output_address.setText(name_object)
                 self.add_postal_code(flag_find_by_coords=True)
@@ -133,21 +134,24 @@ class Window(QMainWindow):
             self.map_params.change_type_sat_skl()
 
     def add_postal_code(self, flag_find_by_coords=False):
-        try:
-            if not flag_find_by_coords:
-                postal_code = self.get_postal_code.execute(
-                    self.geocoder_adapter.get_coords(self.search_obj))
-            else:
-                postal_code = self.get_postal_code.execute_by_coords(
-                    self.geocoder_adapter.get_object(self.map_params.get_start_longitude(),
-                                                     self.map_params.get_start_latitude()))
+        if not self.check_postal_code.isChecked():
+            if self.postal_code:
+                self.output_address.setText(self.output_address.text()[:-len(self.postal_code) - 2])
+                self.postal_code = ""
+        else:
+            try:
+                if not flag_find_by_coords:
+                    self.postal_code = self.get_postal_code.execute(
+                        self.geocoder_adapter.get_coords(self.search_obj))
+                else:
+                    self.postal_code = self.get_postal_code.execute_by_coords(
+                        self.geocoder_adapter.get_object(self.map_params.get_start_longitude(),
+                                                         self.map_params.get_start_latitude()))
 
-            if self.check_postal_code.isChecked():
-                self.output_address.setText(self.output_address.text() + ", " + postal_code)
-            else:
-                self.output_address.setText(self.output_address.text()[:-len(postal_code) - 2])
-        except KeyError:
-            return
+                if self.check_postal_code.isChecked():
+                    self.output_address.setText(self.output_address.text() + ", " + self.postal_code)
+            except KeyError:
+                return
 
     def show_map(self):
         map_picture = self.use_case.execute(self.map_params)
